@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace VideoStoreManagementSystemConsole
@@ -10,11 +11,12 @@ namespace VideoStoreManagementSystemConsole
         private Dictionary<int, VideoPlus> videoList = new Dictionary<int, VideoPlus>();
         private Dictionary<int, List<VideoRental>> rentVideoList = new Dictionary<int, List<VideoRental>>();
 
-        public void addVideo(string title, string category, int numberOfCopies)
-        {
-            VideoPlus video = new VideoPlus(videoList.Count() + 1, title, category, numberOfCopies, true);
-            videoList.Add(videoList.Count() +1, video);
-        }
+        //public void addVideo(string title, string category, int numberOfCopies)
+        //{
+        //    VideoPlus video = new VideoPlus(videoList.Count() + 1, title, category, numberOfCopies, true);
+        //    videoList.Add(videoList.Count() +1, video);
+            
+        //}
 
         public void addMember(string name, string phoneNumber)
         {
@@ -87,23 +89,8 @@ namespace VideoStoreManagementSystemConsole
 
         public void displayVideos()
         {
-            if (videoList.Count()== 0)
-            {
-                Console.WriteLine("No videos!");  
-            }
-            else
-            {
-                Console.WriteLine("Id\t|\tTitle\t|\tCategory\t|\tAvailable");
-                foreach (KeyValuePair<int, VideoPlus> videoKeyindex in videoList )
-                {
-                    VideoPlus video = videoKeyindex.Value;
-                    if (video.getNumberOfCopies() != 0)
-                    {
-                        Console.WriteLine(video.getId() + "|" + video.getTitle() + "|" + video.getCategory() + "|" + video.getNumberOfCopies());
-                    }
-                }
+               GetMovieData();
                 Console.WriteLine("--End--");
-            }
         }
 
         public bool isMemberAvailable(int membershipId)
@@ -133,6 +120,19 @@ namespace VideoStoreManagementSystemConsole
             {
                 return true;
             }
+        }
+
+        private static void GetMovieData()
+        {
+            string DataFile = "MovieData.txt";
+            string Content = "Empty File";
+
+            if (File.Exists(DataFile))
+            {
+                Content = File.ReadAllText(DataFile);
+            }
+
+            Console.WriteLine(Content);
         }
     }
 }

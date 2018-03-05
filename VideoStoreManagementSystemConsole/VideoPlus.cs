@@ -1,4 +1,6 @@
-﻿namespace VideoStoreManagementSystemConsole
+﻿using System;
+
+namespace VideoStoreManagementSystemConsole
 {
     public class VideoPlus : Video
     {
@@ -32,6 +34,11 @@
         public void setAvailable(bool available)
         {
             this.available = available;
+        }
+
+        internal int setNumberOfCopies()
+        {
+            throw new NotImplementedException();
         }
     }
 }

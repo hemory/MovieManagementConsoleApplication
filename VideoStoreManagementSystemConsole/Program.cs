@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace VideoStoreManagementSystemConsole
 {
@@ -6,6 +8,9 @@ namespace VideoStoreManagementSystemConsole
     {
         static void Main(string[] args)
         {
+            //FileReader();
+            
+
             VideoStore videoStore = new VideoStore();
             LoanPolicy loanPolicy = new LoanPolicy();
             loanPolicy.set_perday_rental_charge(20);
@@ -34,7 +39,7 @@ namespace VideoStoreManagementSystemConsole
                         string videoCategory = Console.ReadLine();
                         Console.WriteLine("Enter number of copies");
                         int videoCopies = Convert.ToInt32(Console.ReadLine());
-                        videoStore.addVideo(videoTitle,videoCategory,videoCopies);
+                        UpdateMoviesData(videoTitle,videoCategory,videoCopies);
                         Console.WriteLine("The video was added successfully");
                         break;
 
@@ -43,7 +48,7 @@ namespace VideoStoreManagementSystemConsole
                         string customerName = Console.ReadLine();
                         Console.WriteLine("Enter customer phone number");
                         string customerPhoneNumber = Console.ReadLine();
-                        videoStore.addMember(customerName, customerPhoneNumber);
+                        UpdateCustomersData(customerName,customerPhoneNumber);
                         Console.WriteLine("The customer was added successfully");
                         break;
 
@@ -125,6 +130,35 @@ namespace VideoStoreManagementSystemConsole
                     break;
                 }
             }
+        }
+
+        public static void UpdateMoviesData(string title, string category, int numberOfCopies)
+        {
+            string dataFile = "MovieData.txt";
+            IEnumerable<string> content = new[] {$"Title: {title}  Category: {category}  Copies: {numberOfCopies} \n"};
+
+            File.AppendAllLines(dataFile, content);
+        }
+
+        public static void UpdateCustomersData(string customerName, string customerPhoneNumber)
+        {
+            string dataFile = "CustomerData.txt";
+            IEnumerable<string> content = new[] { $"Name: {customerName}  Phone Number: {customerPhoneNumber} \n" };
+
+            File.AppendAllLines(dataFile, content);
+        }
+
+        private static void FileReader()
+        {
+            string DataFile = "MovieStoreData.txt";
+            string Content = "Empty File";
+
+            if (File.Exists(DataFile))
+            {
+                Content = File.ReadAllText(DataFile);
+            }
+
+            Console.WriteLine(Content);
         }
     }
 }
